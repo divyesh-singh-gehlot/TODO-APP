@@ -1,21 +1,98 @@
 <%- include("partials/header") %>
-    <div>
-        <h1>Update Task</h1>
-        <a href="/">Back</a>
-        <div>
-            <form action="/update-task/<%= updateTask._id %>" method="post">
-                <div>
-                    <label for="title">Title:</label>
-                    <input type="text" value="<%= updateTask.title %>" name="title" id="title">
-                </div>
-                <div>
-                    <label for="description">Description:</label>
-                    <input type="text" value="<%= updateTask.description %>" name="description" id="description">
-                </div>
-                <div>
-                    <button>Update</button>
-                </div>
-            </form>
-        </div>
+
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f7f8;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+  }
+
+  div.container {
+    max-width: 500px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px 40px;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #007BFF;
+  }
+
+  a.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+
+  a.back-link:hover {
+    color: #0056b3;
+  }
+
+  form div.form-group {
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s ease;
+  }
+
+  input[type="text"]:focus {
+    border-color: #007BFF;
+    outline: none;
+  }
+
+  button {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 18px;
+    font-weight: 600;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+<div class="container">
+  <h1>Update Task</h1>
+  <a href="/" class="back-link">&larr; Back</a>
+  <form action="/update-task/<%= updateTask._id %>" method="post">
+    <div class="form-group">
+      <label for="title">Title:</label>
+      <input type="text" value="<%= updateTask.title %>" name="title" id="title" required>
     </div>
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <input type="text" value="<%= updateTask.description %>" name="description" id="description" required>
+    </div>
+    <button type="submit">Update</button>
+  </form>
+</div>
+
 <%- include("partials/footer") %>
