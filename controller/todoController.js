@@ -1,0 +1,72 @@
+const Todo = require("../models/Todo")
+const moment = require("moment")
+
+const homeTodoPage = async (req, res) => {
+    try {
+
+        const tasks = await Todo.find({}).sort({createdAt: -1})
+
+        res.locals.moment = moment;
+
+        res.render("index", { title: "Home", tasks })
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+};
+
+const addTodoForm = (req, res) => {
+    try {
+        res.render("addTodo", { title: "Add" })
+    } catch (error) {
+        res.status(400).send(error.message)
+    }
+};
+
+const updateTodoForm = (req, res) => {
+    try {
+        res.render("updateTodo", { title: "Update" })
+    } catch (error) {
+        res.status(400).send(error.message)
+    }
+};
+
+const deleteTodoPage = (req, res) => {
+    try {
+        res.render("deleteTodo", { title: "Delete" })
+    } catch (error) {
+        res.status(400).send(error.message)
+    }
+};
+
+const addTodo = async (req, res, next)=> {
+    try {
+        const {title, description} = req.body;
+
+        if(!title && !description){
+            res.status(400).send({message:"Both the Fields are Required"});
+        }
+        if(!title){
+            res.status(400).send({message:"Title is Required"});
+        }
+        if(!description){
+            res.status(400).send({message:"Description is Required"});
+        }
+        
+        const newTodo = new Todo({title, description});
+        await newTodo.save();
+
+        console.log("Title and description saved to DB.")
+
+        res.redirect("/")
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+};
+
+module.exports = {
+    homeTodoPage,
+    addTodoForm,
+    updateTodoForm,
+    deleteTodoPage,
+    addTodo
+}
