@@ -36,7 +36,8 @@ const updateTodoForm = async (req, res) => {
 
 const deleteTodoPage = (req, res) => {
     try {
-        res.render("deleteTodo", { title: "Delete" })
+        const {id} = req.query;
+        res.render("deleteTodo", { title: "Delete" , id })
     } catch (error) {
         res.status(400).send(error.message)
     }
@@ -90,6 +91,20 @@ const updateTodo = async (req, res, next)=> {
     }
 };
 
+const deleteTodo = async (req, res, next)=> {
+    try {
+        const {id} = req.params;
+        
+        await Todo.findByIdAndDelete(id);
+        
+        console.log("Todo Deleted in DB.")
+
+        res.redirect("/")
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+};
+
 module.exports = {
     homeTodoPage,
     addTodoForm,
@@ -97,4 +112,5 @@ module.exports = {
     deleteTodoPage,
     addTodo,
     updateTodo,
+    deleteTodo
 }
