@@ -1,16 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do App</title>
-</head>
-<body>
+<%- include("partials/header") %>
     <div>
         <h1>To-Do List</h1>
     </div>
     <div>
-        <a href="">Add Task</a>
+        <a href="/add-task">Add Task</a>
     </div>
     <div>
         <table>
@@ -21,19 +14,21 @@
                 <th>Updated at</th>
                 <th>Action</th>
             </tr>
-            <tr>
-                <td>Test Title</td>
-                <td>Test Description</td>
-                <td>Test date 1</td>
-                <td>Test date 2</td>
+            <% for(let i=0; i<tasks.length; i++){ %>
+                <tr>
+                <td><%= tasks[i].title %></td>
+                <td><%= tasks[i].description %></td>
+                <td><%= moment(tasks[i].createdAt).format("DD/MMM/YYYY, HH:mm:ss") %></td>
+                <td><%= moment(tasks[i].updatedAt).format("DD/MMM/YYYY, HH:mm:ss") %></td>
                 <td>
                     <div>
-                        <a href="">Edit</a>
-                        <a href="">Delete</a>
+                        <a href="/update-task/">Update</a>
+                        <a href="/delete-task">Delete</a>
                     </div>
                 </td>
             </tr>
+            <% } %>
+
         </table>
     </div>
-</body>
-</html>
+<%- include("partials/footer") %>
