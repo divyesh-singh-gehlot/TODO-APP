@@ -4,7 +4,7 @@ const moment = require("moment")
 const homeTodoPage = async (req, res) => {
     try {
 
-        const tasks = await Todo.find({}).sort({createdAt: -1})
+        const tasks = await Todo.find({}).sort({updatedAt: -1})
 
         res.locals.moment = moment;
 
@@ -22,9 +22,13 @@ const addTodoForm = (req, res) => {
     }
 };
 
-const updateTodoForm = (req, res) => {
+const updateTodoForm = async (req, res) => {
     try {
-        res.render("updateTodo", { title: "Update" })
+        const {id} = req.query;
+        const updateTask = await Todo.findById(id);
+        console.log(updateTask)
+
+        res.render("updateTodo", { title: "Update" , updateTask})
     } catch (error) {
         res.status(400).send(error.message)
     }
@@ -63,10 +67,34 @@ const addTodo = async (req, res, next)=> {
     }
 };
 
+const updateTodo = async (req, res, next)=> {
+    try {
+        const {id} = req.params;
+        const {title, description} = req.body;
+        
+        const todo = await Todo.findById(id);
+         if(!todo){
+            res.status(400).send("No Todo Found")
+         }
+
+         todo.title = title;
+         todo.description = description;
+
+         await todo.save()
+        
+        console.log("Title and description updated in DB.")
+
+        res.redirect("/")
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+};
+
 module.exports = {
     homeTodoPage,
     addTodoForm,
     updateTodoForm,
     deleteTodoPage,
-    addTodo
+    addTodo,
+    updateTodo,
 }

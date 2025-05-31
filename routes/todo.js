@@ -13,4 +13,7 @@ router.get("/delete-task", todoControllers.deleteTodoPage);
 
 router.post("/add-task", todoControllers.addTodo);
 
+router.post("/update-task/:id", todoControllers.updateTodo);
+
+
 module.exports = router;

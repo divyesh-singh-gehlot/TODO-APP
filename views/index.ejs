@@ -22,7 +22,7 @@
                 <td><%= moment(tasks[i].updatedAt).format("DD/MMM/YYYY, HH:mm:ss") %></td>
                 <td>
                     <div>
-                        <a href="/update-task/">Update</a>
+                        <a href="/update-task?id=<%= tasks[i]._id %>">Update</a>
                         <a href="/delete-task">Delete</a>
                     </div>
                 </td>
