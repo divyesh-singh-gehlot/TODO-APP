@@ -5,11 +5,13 @@
         font-family: Arial, sans-serif;
         padding: 20px;
         background-color: #f5f5f5;
+        margin: 0;
     }
 
     h1 {
         text-align: center;
         color: #333;
+        font-size: 32px;
     }
 
     .add-task {
@@ -24,6 +26,12 @@
         padding: 10px 20px;
         text-decoration: none;
         border-radius: 6px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    .add-task a:hover {
+        background-color: #45a049;
     }
 
     table {
@@ -32,13 +40,14 @@
         background-color: white;
         border-radius: 8px;
         overflow: hidden;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
     th, td {
         padding: 12px 15px;
         text-align: center;
         border-bottom: 1px solid #ddd;
+        word-break: break-word;
     }
 
     th {
@@ -56,20 +65,67 @@
         padding: 6px 12px;
         text-decoration: none;
         border-radius: 4px;
+        display: inline-block;
     }
 
     .actions a:first-child {
-        background-color: #FFC107; /* Update - yellow */
+        background-color: #FFC107;
     }
 
     .actions a:last-child {
-        background-color: #DC3545; /* Delete - red */
+        background-color: #DC3545;
+    }
+
+    .actions a:hover {
+        opacity: 0.9;
     }
 
     .no-data {
         text-align: center;
         color: #888;
         font-style: italic;
+    }
+
+    /* 🔽 Responsive Design */
+    @media (max-width: 768px) {
+        table, thead, tbody, th, td, tr {
+            display: block;
+        }
+
+        thead tr {
+            display: none;
+        }
+
+        tr {
+            margin-bottom: 15px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            padding: 10px;
+        }
+
+        td {
+            text-align: left;
+            padding: 10px;
+            border: none;
+            position: relative;
+        }
+
+        td::before {
+            content: attr(data-label);
+            font-weight: bold;
+            display: block;
+            margin-bottom: 4px;
+            color: #555;
+        }
+
+        .actions {
+            text-align: left;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
     }
 </style>
 
@@ -83,32 +139,36 @@
 
 <div>
     <table>
-        <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Created At</th>
-            <th>Updated At</th>
-            <th>Action</th>
-        </tr>
-
-        <% if (tasks.length === 0) { %>
+        <thead>
             <tr>
-                <td colspan="5" class="no-data">No tasks found. Add a new one!</td>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+                <th>Action</th>
             </tr>
-        <% } else { %>
-            <% for (let i = 0; i < tasks.length; i++) { %>
+        </thead>
+
+        <tbody>
+            <% if (tasks.length === 0) { %>
                 <tr>
-                    <td><%= tasks[i].title %></td>
-                    <td><%= tasks[i].description %></td>
-                    <td><%= moment(tasks[i].createdAt).format("DD/MMM/YYYY, HH:mm:ss") %></td>
-                    <td><%= moment(tasks[i].updatedAt).format("DD/MMM/YYYY, HH:mm:ss") %></td>
-                    <td class="actions">
-                        <a href="/update-task?id=<%= tasks[i]._id %>">Update</a>
-                        <a href="/delete-task?id=<%= tasks[i]._id %>">Delete</a>
-                    </td>
+                    <td colspan="5" class="no-data">No tasks found. Add a new one!</td>
                 </tr>
+            <% } else { %>
+                <% for (let i = 0; i < tasks.length; i++) { %>
+                    <tr>
+                        <td data-label="Title"><%= tasks[i].title %></td>
+                        <td data-label="Description"><%= tasks[i].description %></td>
+                        <td data-label="Created At"><%= moment(tasks[i].createdAt).format("DD/MMM/YYYY, HH:mm:ss") %></td>
+                        <td data-label="Updated At"><%= moment(tasks[i].updatedAt).format("DD/MMM/YYYY, HH:mm:ss") %></td>
+                        <td data-label="Action" class="actions">
+                            <a href="/update-task?id=<%= tasks[i]._id %>">Update</a>
+                            <a href="/delete-task?id=<%= tasks[i]._id %>">Delete</a>
+                        </td>
+                    </tr>
+                <% } %>
             <% } %>
-        <% } %>
+        </tbody>
     </table>
 </div>
 

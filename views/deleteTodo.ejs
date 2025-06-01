@@ -5,6 +5,7 @@
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background-color: #f9f9f9;
         padding: 40px;
+        margin: 0;
     }
 
     .delete-container {
@@ -20,11 +21,13 @@
     h1 {
         color: #dc3545;
         margin-bottom: 20px;
+        font-size: 28px;
     }
 
     p {
         font-size: 18px;
         margin-bottom: 30px;
+        color: #333;
     }
 
     .button-group a {
@@ -65,6 +68,40 @@
     .back-link:hover {
         text-decoration: underline;
     }
+
+    @media (max-width: 600px) {
+    body {
+        padding: 20px;
+    }
+
+    .delete-container {
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    .button-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .button-group a {
+        width: 100%;
+        max-width: 300px;
+        box-sizing: border-box;
+        text-align: center;
+        padding: 12px 20px;
+    }
+}
 </style>
 
 <div class="delete-container">
