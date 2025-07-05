@@ -1,5 +1,6 @@
 <%- include("partials/header") %>
 
+
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -159,8 +160,8 @@
                     <tr>
                         <td data-label="Title"><%= tasks[i].title %></td>
                         <td data-label="Description"><%= tasks[i].description %></td>
-                        <td data-label="Created At"><%= moment(tasks[i].createdAt).format("DD/MMM/YYYY, HH:mm:ss") %></td>
-                        <td data-label="Updated At"><%= moment(tasks[i].updatedAt).format("DD/MMM/YYYY, HH:mm:ss") %></td>
+                        <td data-label="Created At"><%= moment(tasks[i].createdAt).tz("Asia/Kolkata").format("DD/MMM/YYYY, HH:mm:ss") %></td>
+                        <td data-label="Updated At"><%= moment(tasks[i].updatedAt).tz("Asia/Kolkata").format("DD/MMM/YYYY, HH:mm:ss") %></td>
                         <td data-label="Action" class="actions">
                             <a href="/update-task?id=<%= tasks[i]._id %>">Update</a>
                             <a href="/delete-task?id=<%= tasks[i]._id %>">Delete</a>
